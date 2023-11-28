@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "IUM"
+version = "0.1.0"
+description = ""
+authors = ["Wojtek Zarzecki", "Patryk Filip Gryz"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.1.3"
+jupyter = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
