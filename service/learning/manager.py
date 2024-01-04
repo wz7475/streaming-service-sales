@@ -66,7 +66,7 @@ class LearningManager:
         return artist
 
     def get_prediction(self, artist_id: str, model: EModel, start: int,
-                       end: int):
+                       periods: int) -> list[float]:
         artist = self.get_artist(artist_id)
         predictor: Optional[IPredictor] = None
 
@@ -77,4 +77,4 @@ class LearningManager:
         else:
             raise UnknownModel(model)
 
-        return predictor.predict(start, end)
+        return predictor.predict(start, periods)

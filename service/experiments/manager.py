@@ -1,7 +1,48 @@
+import time
+from datetime import date
+from random import uniform
+from typing import Any
+
+from service.config import EXPERIMENTS_SPLIT_PERCENT
+from service.experiments.database import crud
 from service.experiments.database.database import ExperimentsLocalSession
+from service.experiments.database.models import Result
+from service.learning.manager import LearningManager, EModel
 
 
 class ExperimentsManager:
 
-    def __init__(self):
+    def __init__(self, learning_manager: LearningManager):
         self._db = ExperimentsLocalSession()
+        self._learning_manager = learning_manager
+
+    def get_all(self) -> list[Result]:
+        return crud.get_all(self._db)
+
+    def perform_experiment(self, artist_id: str, start: int, periods: int) -> \
+            list[Any]:
+        model = EModel.Naive
+
+        if uniform(0, 1) > EXPERIMENTS_SPLIT_PERCENT:
+            model = EModel.Complex
+
+        start_time = time.process_time()
+
+        result = self._learning_manager.get_prediction(
+            artist_id, model, start, periods
+        )
+
+        end_time = time.process_time()
+        elapsed_time = end_time - start_time
+
+        crud.put_result(
+            self._db,
+            artist_id,
+            model,
+            date.today(),  # start @todo should be start
+            periods,
+            result,
+            elapsed_time
+        )
+
+        return [result, str(model)]  # @todo
