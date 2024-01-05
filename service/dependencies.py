@@ -1,8 +1,10 @@
+from service.experiments.database.database import ExperimentsLocalSession
 from service.experiments.manager import ExperimentsManager
 from service.learning.manager import LearningManager
 
-learning_manager = LearningManager()
-experiments_manager = ExperimentsManager(learning_manager)
+experiments_db = ExperimentsLocalSession()
+learning_manager = LearningManager(experiments_db)
+experiments_manager = ExperimentsManager(experiments_db, learning_manager)
 
 
 def get_experiments_manager():

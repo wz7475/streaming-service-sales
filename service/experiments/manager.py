@@ -1,5 +1,5 @@
 import time
-from datetime import date
+from datetime import date, datetime
 from random import uniform
 from typing import Any
 
@@ -12,8 +12,9 @@ from service.learning.manager import LearningManager, EModel
 
 class ExperimentsManager:
 
-    def __init__(self, learning_manager: LearningManager):
-        self._db = ExperimentsLocalSession()
+    def __init__(self, experiments_db: ExperimentsLocalSession,
+                 learning_manager: LearningManager):
+        self._db = experiments_db
         self._learning_manager = learning_manager
 
     def get_all(self) -> list[Result]:
@@ -39,10 +40,12 @@ class ExperimentsManager:
             self._db,
             artist_id,
             model,
-            date.today(),  # start @todo should be start
+            start,
             periods,
             result,
-            elapsed_time
+            elapsed_time,
+            datetime.now(),
+            True
         )
 
         return [result, str(model)]  # @todo

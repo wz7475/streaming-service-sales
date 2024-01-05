@@ -3,6 +3,7 @@ from enum import Enum
 from functools import lru_cache
 from typing import Optional
 
+from service.experiments.database.database import ExperimentsLocalSession
 from service.learning.database import crud
 from service.learning.database.database import LearningLocalSession
 from service.learning.database.models import Artist
@@ -11,6 +12,7 @@ from service.learning.predictor import IPredictor
 
 
 class EModel(Enum):
+    All = "all"
     Naive = "naive"
     Complex = "complex"
 
@@ -52,8 +54,9 @@ class MLComplex:
 
 class LearningManager:
 
-    def __init__(self):
+    def __init__(self, experiments_db: ExperimentsLocalSession):
         self._db = LearningLocalSession()
+        self._experiments_db = experiments_db
         self._artists = []
 
     @lru_cache()

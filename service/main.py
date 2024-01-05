@@ -10,11 +10,68 @@ from service.learning.manager import LearningManager, EModel
 app = FastAPI()
 
 
-@app.get("/")
-def prediction(learning_manager: Annotated[
-    LearningManager, Depends(get_learning_manager)]):
-    learning_manager.fill()
-    return 'filled'
+@app.get("/experiments/get")
+def get_experiments(limit: int = 1000, artist: str = None,
+                    model: EModel = EModel.All):
+    pass
+
+
+@app.get("/predict/info/{artist_id}")
+def get_predict_info(artist_id: str):
+    pass
+
+
+@app.get("/predict/{artist_id}/{start}/{periods}")
+def get_predict_random(artist_id: str, start: int, periods: int,
+                       experiments_manager: Annotated[
+                           ExperimentsManager, Depends(
+                               get_experiments_manager)]):
+    try:
+        return experiments_manager.perform_experiment(artist_id, start,
+                                                      periods)
+    except ArtistNotFound as ex:
+        raise HTTPException(status_code=404, detail=ex.message)
+    except UnknownModel as ex:
+        raise HTTPException(status_code=400, detail=ex.message)
+
+
+@app.get("/predict/{artist_id}/{start}/{periods}/{model}")
+def get_predict_model(artist_id: str, start: int, periods: int, model: EModel,
+                      learning_manager: Annotated[
+                          LearningManager, Depends(get_learning_manager)]):
+    try:
+        if model == EModel.All:
+            return [
+                learning_manager.get_prediction(artist_id, EModel.Naive, start,
+                                                periods),
+                learning_manager.get_prediction(artist_id, EModel.Complex,
+                                                start,
+                                                periods)
+            ]
+
+        return learning_manager.get_prediction(artist_id, model, start,
+                                               periods)
+    except ArtistNotFound as ex:
+        raise HTTPException(status_code=404, detail=ex.message)
+    except UnknownModel as ex:
+        raise HTTPException(status_code=400, detail=ex.message)
+
+
+# OLD
+# OLD
+
+# OLD
+# OLD
+# OLD
+# OLD
+# OLD
+# OLD
+# OLD
+# OLD
+# OLD
+# OLD
+
+
 
 
 @app.get("/all")

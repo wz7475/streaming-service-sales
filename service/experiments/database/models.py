@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, Sequence, String, Date, Float
+from sqlalchemy import Column, Integer, Sequence, String, LargeBinary, Date, \
+    Float, DateTime, Boolean
 
 from service.experiments.database.base import ExperimentsBase
 
@@ -10,8 +11,9 @@ class Result(ExperimentsBase):
                 index=True)
     artist_id = Column(String)
     model = Column(Integer)
-    start = Column(Date)
+    start = Column(Integer)
     periods = Column(Integer)
-    prediction = Column(String)
+    prediction = Column(LargeBinary)
     duration = Column(Float)
-
+    timestamp = Column(DateTime)
+    is_experiment = Column(Boolean)
