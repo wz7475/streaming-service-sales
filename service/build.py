@@ -1,5 +1,6 @@
 import pickle
 
+from model.service_model_on_1_artist import generate_models
 from service.learning.database.database import LearningLocalSession
 from service.learning.database.models import Artist
 from service.pipeline.naive import NaiveModel
@@ -8,19 +9,16 @@ from service.pipeline.naive import NaiveModel
 def build():
     db = LearningLocalSession()
 
-    artist = Artist(
-        id="34",
-        train_begin=1,
-        train_end=10,
-        naive_model=pickle.dumps(
-            NaiveModel([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
-        ),
-        complex_model=pickle.dumps(
-            NaiveModel([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+    for artist_id, naive, complex in generate_models():
+        artist = Artist(
+            id=artist_id,
+            train_begin=1,
+            train_end=10,
+            naive_model=pickle.dumps(naive),
+            complex_model=pickle.dumps(complex)
         )
-    )
-    db.add(artist)
-    db.commit()
+        db.add(artist)
+        db.commit()
 
 
 if __name__ == "__main__":
