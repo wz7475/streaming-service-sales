@@ -1,6 +1,6 @@
 from math import sqrt
 from sklearn.metrics import mean_squared_error
-from model.config_file import data_path
+from config_file import data_path
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
