@@ -4,6 +4,7 @@ Poniżej znajduje się krótki opis oraz cel każdego z notatników używanych w
 
 ## 1. `all_plays_in_service.ipynb`
 - Analiza wszystkich odtworzeń w serwisie.
+- Porównanie agregacji odtworzeń miesięcznych i tygodniowych.
 
 ## 2. `analyze_sarima_dummy.ipynb`
 - Analiza skuteczności modelu SARIMA w porównaniu do modelu naiwnego.
@@ -22,12 +23,11 @@ Poniżej znajduje się krótki opis oraz cel każdego z notatników używanych w
 
 ## 6. `model_all_artists.ipynb`
 - Analiza wykorzystania modelu SARIMA do predykcji łącznej ilości odtworzeń dla wszystkich artystów.
+- Analiza skuteczności - zadowalające wyniki, analiza sekwencji z miesięcznymi okresami.
 
-## 7. `one_artist_auto_arima.ipynb`
-- Analiza możliwości wyznaczania hiperparametrów dla każdego artysty osobno.
+## 7. `one_artist_model.ipynb`
+- Pierwsza próba wykorzystania modelu SARIMA do predykcji dla jednego artysty.
+- Analiza skuteczności - słabe wyniki, problem z nauką sekwencji z tygodniowymi okresami.
 
-## 8. `one_artist_statsmodels.ipynb`
-- Głębsza analiza możliwości wyznaczania hiperparametrów dla każdego artysty osobno.
-
-## 9. `sample_predictions_on_1_artist.ipynb`
+## 8. `sample_predictions_on_1_artist.ipynb`
 - Analiza możliwości wyznaczania hiperparametrów dla wszystkich artystów, lecz trenowanie modelu dla każdego artysty osobno.
