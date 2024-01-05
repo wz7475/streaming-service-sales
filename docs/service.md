@@ -8,6 +8,14 @@ przez określony model dla konkretnego artysty, a także przeprowadzanie
 eksperymentów A/B. Dodatkowo, mikroserwis pozwala na zapytania dotyczące 
 wyników historycznych predykcji. 
 
+## Jak uruchomić
+1. Wymaga poetry (https://python-poetry.org/docs/#installation).
+2. Zainstaluj zależności: `poetry install`.
+3. Uruchom w root `mkdir service/db`.
+4. Do następnych kroków `cd service`.
+5. Aby wygenerować bazę danych, uruchom `python build.py`.
+6. Aby uruchomić serwis, uruchom `python main.py`.
+
 ## Endpointy
 
 ### `/predict/{artist_id}/{start}/{periods}/{model}`
