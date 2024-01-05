@@ -80,4 +80,9 @@ class LearningManager:
         else:
             raise UnknownModel(model)
 
-        return predictor.predict(start, periods)
+        result = predictor.predict(start, periods)
+
+        # @todo: Models should return native python list[float]
+        if isinstance(result, list):
+            return [r.astype(float) for r in result]
+        return result.astype(float).tolist()
