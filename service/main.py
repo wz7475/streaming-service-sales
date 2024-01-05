@@ -41,7 +41,7 @@ def get_predict_random(artist_id: str, start: int, periods: int,
                                get_experiments_manager)]):
     try:
         return experiments_manager.perform_experiment(artist_id, start,
-                                                      periods)
+                                                      start + periods)
     except ArtistNotFound as ex:
         raise HTTPException(status_code=404, detail=ex.message)
     except UnknownModel as ex:
@@ -56,14 +56,14 @@ def get_predict_model(artist_id: str, start: int, periods: int, model: EModel,
         if model == EModel.All:
             return [
                 learning_manager.get_prediction(artist_id, EModel.Naive, start,
-                                                periods),
+                                                start + periods),
                 learning_manager.get_prediction(artist_id, EModel.Complex,
                                                 start,
-                                                periods)
+                                                start + periods)
             ]
 
         return learning_manager.get_prediction(artist_id, model, start,
-                                               periods)
+                                               start + periods)
     except ArtistNotFound as ex:
         raise HTTPException(status_code=404, detail=ex.message)
     except UnknownModel as ex:

@@ -59,7 +59,7 @@ class LearningManager:
             result,
             elapsed_time,
             datetime.now(),
-            True
+            is_experiment
         )
 
         # @todo: Models should return native python list[float]
