@@ -19,6 +19,9 @@ _przed uruchomieniem serwisu należy uruchomić pipeline do przygotowania danych
 
 ## Endpointy
 
+### `/docs`
+- **Opis**: Zawiera dokumentację endpointów
+
 ### `/predict/{artist_id}/{start}/{periods}/{model}`
 - **Opis**: Serwuje predykcje dla danego artysty z okresu od start do periods, 
 wykorzystując zadany model.
@@ -92,3 +95,13 @@ Opis tabeli "Results":
 - **duration (Float)**: Czas trwania predykcji.
 - **timestamp (DateTime)**: Data i czas utworzenia wyniku.
 - **is_experiment (Boolean)**: Informacja, czy wynik pochodzi z eksperymentu A/B (True/False).
+
+## Statystyki
+
+### Czas generowania predykcji
+- **Model naiwny**: mean: 270 μs, stdev: 4.59 μs
+- **Model złożony**: mean: 2325 μs, stdev: 287 μs
+
+### Wielkość bazy danych modeli
+Baza danych modeli zawiera zarówno modele naiwne jak i złożone
+- **Rozmiar**: 8,68 GiB
