@@ -19,13 +19,13 @@ def get_experiments(experiments_manager: Annotated[
 
 @app.get("/experiments/get/all")
 def get_experiments(experiments_manager: Annotated[
-    ExperimentsManager, Depends(get_experiments_manager)]):
+        ExperimentsManager, Depends(get_experiments_manager)]):
     return experiments_manager.get_all()
 
 
 @app.get("/predict/info/{artist_id}")
 def get_predict_info(artist_id: str, learning_manager: Annotated[
-    LearningManager, Depends(get_learning_manager)]):
+        LearningManager, Depends(get_learning_manager)]):
     try:
         artist = learning_manager.get_artist(artist_id)
         return [artist.train_begin, artist.train_end]
@@ -61,64 +61,6 @@ def get_predict_model(artist_id: str, start: int, periods: int, model: EModel,
                                                 periods)
             ]
 
-        return learning_manager.get_prediction(artist_id, model, start,
-                                               periods)
-    except ArtistNotFound as ex:
-        raise HTTPException(status_code=404, detail=ex.message)
-    except UnknownModel as ex:
-        raise HTTPException(status_code=400, detail=ex.message)
-
-
-# OLD
-# OLD
-
-# OLD
-# OLD
-# OLD
-# OLD
-# OLD
-# OLD
-# OLD
-# OLD
-# OLD
-# OLD
-
-
-@app.get("/all")
-def prediction(learning_manager: Annotated[
-    LearningManager, Depends(get_learning_manager)]):
-    models = [learning_manager.get_artist("34")]
-    import pickle
-    return [(
-        model.id,
-        pickle.loads(model.naive_model).predict(10, 12)
-    ) for model in models]
-
-
-@app.get("/experiments/all")
-def experiments_all(experiments_manager: Annotated[
-    ExperimentsManager, Depends(get_experiments_manager)]):
-    return experiments_manager.get_all()
-
-
-@app.get("/predict/{artist_id}/{start}/{periods}")
-def predict_random(artist_id: str, start: int, periods: int,
-                   experiments_manager: Annotated[
-                       ExperimentsManager, Depends(get_experiments_manager)]):
-    try:
-        return experiments_manager.perform_experiment(artist_id, start,
-                                                      periods)
-    except ArtistNotFound as ex:
-        raise HTTPException(status_code=404, detail=ex.message)
-    except UnknownModel as ex:
-        raise HTTPException(status_code=400, detail=ex.message)
-
-
-@app.get("/predict/{artist_id}/{model}/{start}/{periods}")
-def predict(artist_id: str, model: EModel, start: int, periods: int,
-            learning_manager: Annotated[
-                LearningManager, Depends(get_learning_manager)]):
-    try:
         return learning_manager.get_prediction(artist_id, model, start,
                                                periods)
     except ArtistNotFound as ex:
