@@ -9,4 +9,7 @@ rzędu co różnica wyników. Czym mniejszy błąd tym wyższa dokładność.
 
 **Dokładność modeli**
 - Dokładna analiza znajduje się w pliku `model/analyze_sarima_dummy.ipynb`
-- 
+- Model złożony 
+  - jest średnio 2.11 raza dokładniejszy od modelu prostego
+  - w ok. 90% przypadków jest dokładniejszy od modelu prostego
+  - średni błąd względny wynosi 1.6%. 
