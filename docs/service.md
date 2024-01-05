@@ -9,6 +9,7 @@ eksperymentów A/B. Dodatkowo, mikroserwis pozwala na zapytania dotyczące
 wyników historycznych predykcji. 
 
 ## Jak uruchomić
+_przed uruchomieniem serwisu należy uruchomić pipeline do przygotowania danych - patrz `docs/pipeline.md`_
 1. Wymaga poetry (https://python-poetry.org/docs/#installation).
 2. Zainstaluj zależności: `poetry install`.
 3. Uruchom w root `mkdir service/db`.
