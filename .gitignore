@@ -1,3 +1,4 @@
 .idea
 data_v?
 __pycache__
+.venv
