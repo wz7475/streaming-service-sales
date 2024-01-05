@@ -12,6 +12,7 @@ Poniżej znajduje się krótki opis oraz cel każdego z notatników używanych w
 ## 3. `compare_artists.ipynb`
 - Porównanie/analiza wszystkich odtworzeń w serwisie, pogrupowanych według artystów.
 - Analiza możliwości wykorzystania klasterowania artystów.
+- Z powodu uzyskania zadowalających wyników i dużej złożoności klustrowania ten koncept nie był dalje rozwijany.
 
 ## 4. `duration_of_play.ipynb`
 - Analiza długości trwania jednego odsłuchania.
@@ -28,5 +29,5 @@ Poniżej znajduje się krótki opis oraz cel każdego z notatników używanych w
 ## 8. `one_artist_statsmodels.ipynb`
 - Głębsza analiza możliwości wyznaczania hiperparametrów dla każdego artysty osobno.
 
-## 9. `service_model_on_1_artist.ipynb`
+## 9. `sample_predictions_on_1_artist.ipynb`
 - Analiza możliwości wyznaczania hiperparametrów dla wszystkich artystów, lecz trenowanie modelu dla każdego artysty osobno.

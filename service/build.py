@@ -1,6 +1,6 @@
 import pickle
 
-from model.service_model_on_1_artist import generate_models
+from model.complex_and_naive_pred_all_artists import generate_models
 from service.learning.database.database import LearningLocalSession
 from service.learning.database.models import Artist
 
