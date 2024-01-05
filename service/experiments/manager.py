@@ -1,7 +1,7 @@
 import time
 from datetime import date, datetime
 from random import uniform
-from typing import Any
+from typing import Any, Optional
 
 from service.config import EXPERIMENTS_SPLIT_PERCENT
 from service.experiments.database import crud
@@ -16,6 +16,9 @@ class ExperimentsManager:
                  learning_manager: LearningManager):
         self._db = experiments_db
         self._learning_manager = learning_manager
+
+    def get(self, limit: int, artist: Optional[str], model: Optional[EModel]):
+        return crud.get(self._db, limit, artist, model)
 
     def get_all(self) -> list[Result]:
         return crud.get_all(self._db)

@@ -11,14 +11,26 @@ app = FastAPI()
 
 
 @app.get("/experiments/get")
-def get_experiments(limit: int = 1000, artist: str = None,
-                    model: EModel = EModel.All):
-    pass
+def get_experiments(experiments_manager: Annotated[
+    ExperimentsManager, Depends(get_experiments_manager)], limit: int = 1000,
+                    artist: str = None, model: EModel = EModel.All):
+    return experiments_manager.get(limit, artist, model)
+
+
+@app.get("/experiments/get/all")
+def get_experiments(experiments_manager: Annotated[
+    ExperimentsManager, Depends(get_experiments_manager)]):
+    return experiments_manager.get_all()
 
 
 @app.get("/predict/info/{artist_id}")
-def get_predict_info(artist_id: str):
-    pass
+def get_predict_info(artist_id: str, learning_manager: Annotated[
+    LearningManager, Depends(get_learning_manager)]):
+    try:
+        artist = learning_manager.get_artist(artist_id)
+        return [artist.train_begin, artist.train_end]
+    except ArtistNotFound as ex:
+        raise HTTPException(status_code=404, detail=ex.message)
 
 
 @app.get("/predict/{artist_id}/{start}/{periods}")
@@ -70,8 +82,6 @@ def get_predict_model(artist_id: str, start: int, periods: int, model: EModel,
 # OLD
 # OLD
 # OLD
-
-
 
 
 @app.get("/all")
