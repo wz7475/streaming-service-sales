@@ -4,9 +4,12 @@ from typing import Optional, Type
 
 from sqlalchemy.orm import Session
 
+from service.experiments.database.database import init
 from service.experiments.database.models import Result, ResultResponse
-from service.learning.manager import EModel
+from service.learning.emodel import EModel
 
+
+init()
 
 def _decompile_results(results: list[Type[Result]]) -> list[
     Type[ResultResponse]]:

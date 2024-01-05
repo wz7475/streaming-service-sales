@@ -1,14 +1,12 @@
-import time
-from datetime import date, datetime
 from random import uniform
-from timeit import default_timer
 from typing import Any, Optional
 
 from service.config import EXPERIMENTS_SPLIT_PERCENT
 from service.experiments.database import crud
 from service.experiments.database.database import ExperimentsLocalSession
 from service.experiments.database.models import Result, ResultResponse
-from service.learning.manager import LearningManager, EModel
+from service.learning.manager import LearningManager
+from service.learning.emodel import EModel
 
 
 class ExperimentsManager:
@@ -31,26 +29,8 @@ class ExperimentsManager:
         if uniform(0, 1) > EXPERIMENTS_SPLIT_PERCENT:
             model = EModel.Complex
 
-        start_time = default_timer()
-
         result = self._learning_manager.get_prediction(
-            artist_id, model, start, periods
+            artist_id, model, start, periods, is_experiment=True
         )
 
-        end_time = default_timer()
-        elapsed_time = end_time - start_time
-
-        crud.put_result(
-            self._db,
-            artist_id,
-            model,
-            start,
-            periods,
-            result,
-            elapsed_time,
-            datetime.now(),
-            True
-        )
-        print(elapsed_time)
-
-        return [result, str(model)]  # @todo
+        return result

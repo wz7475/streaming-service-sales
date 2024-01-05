@@ -11,3 +11,7 @@ ExperimentsBase.metadata.create_all(experiments_engine)
 
 ExperimentsLocalSession = sessionmaker(autocommit=False, autoflush=False,
                                        bind=experiments_engine)
+
+
+def init():
+    pass

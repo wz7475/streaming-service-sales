@@ -5,7 +5,8 @@ from fastapi import FastAPI, Depends, HTTPException
 from service.dependencies import get_learning_manager, get_experiments_manager
 from service.experiments.manager import ExperimentsManager
 from service.learning.errors import ArtistNotFound, UnknownModel
-from service.learning.manager import LearningManager, EModel
+from service.learning.manager import LearningManager
+from service.learning.emodel import EModel
 
 app = FastAPI()
 

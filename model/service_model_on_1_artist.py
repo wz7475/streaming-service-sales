@@ -23,6 +23,10 @@ def prepare_df(artist_filename: str) -> pd.DataFrame:
     return df_resampled
 
 
+def avg_timeplay_artist(artist_id: str) -> float:
+    df = pd.read_csv(os.path.join(data_path, "artists_duration.csv"))
+    return df[df['id_artist'] == artist_id]["song_duration"].values[0]
+
 def get_trained_model(train) -> SARIMAX:
     sarima = SARIMAX(train, order=(1, 1, 1), seasonal_order=(1, 1, 1, 12))
     sarima_fit = sarima.fit(disp=False)
@@ -36,8 +40,8 @@ def get_dummy_prediction(train, periods: int):
             dummy_pred[i] = train[- (periods) + i:].mean()
         else:
             dummy_pred[i] = train[- (periods) + i:].mean() * (
-                        periods - i) / periods + dummy_pred[
-                                                 :i].mean() * i / periods
+                    periods - i) / periods + dummy_pred[
+                                             :i].mean() * i / periods
     return dummy_pred
 
 
@@ -57,8 +61,9 @@ def check_artist(artist_id: str) -> (float, float):
 
 
 class NaiveModel:
-    def __init__(self, train):
+    def __init__(self, train, avg_timeplay: float):
         self.train = [t for t in train]
+        self.avg_timeplay = avg_timeplay
 
     def predict(self, start, end: int, **kwargs):
         copy = [t for t in self.train]
@@ -68,17 +73,30 @@ class NaiveModel:
                 sum(copy[-4 + period:]) / 4
             )
 
-        return copy[start:end]
+        return [c * self.avg_timeplay for c in copy[start:end]]
 
 
-def get_naive_model(train):
-    return NaiveModel(train)
+class ComplexModel:
+    def __init__(self, model, avg_timeplay: float):
+        self.model = model
+        self.avg_timeplay = avg_timeplay
+
+    def predict(self, start, end: int, **kwargs):
+        return [c * self.avg_timeplay for c in self.model.predict(start, end)]
 
 
-def generate_model(artist_id: str):
+def get_naive_model(train, avg_timeplay):
+    return NaiveModel(train, avg_timeplay)
+
+
+def get_complex_model(train, avg_timeplay):
+    return ComplexModel(get_trained_model(train), avg_timeplay)
+
+
+def generate_model(artist_id: str, avg_timeplay):
     df_resampled = prepare_df(artist_id)
-    sarima_fit = get_trained_model(df_resampled['count'].values)
-    naive_fit = get_naive_model(df_resampled['count'].values)
+    sarima_fit = get_complex_model(df_resampled['count'].values, avg_timeplay)
+    naive_fit = get_naive_model(df_resampled['count'].values, avg_timeplay)
 
     return naive_fit, sarima_fit
 
@@ -89,8 +107,10 @@ def generate_models():
 
     for i, artist in enumerate(all_artists):
         print(f'[{i} / {len(all_artists)}]{artist}')
-        naive, complex = generate_model(artist)
-        yield artist.replace('.csv', ''), naive, complex
+        real_id = artist.replace('.csv', '')
+        print(avg_timeplay_artist(real_id))
+        naive, complex = generate_model(artist, avg_timeplay_artist(real_id))
+        yield real_id, naive, complex
 
 
 if __name__ == "__main__":

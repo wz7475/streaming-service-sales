@@ -7,8 +7,8 @@ from config_file import data_path
 
 def generate():
     path = os.path.join(data_path, "sessions.jsonl")
-    if os.path.exists(os.path.join(data_path, "sessions_timestamp_track.csv")):
-        os.remove(os.path.join(data_path, "sessions_timestamp_track.csv"))
+    if os.path.exists(os.path.join(data_path, "timestamp_track_event_type.csv")):
+        os.remove(os.path.join(data_path, "timestamp_track_event_type.csv"))
     for chunk in pd.read_json(path, orient="records", lines=True, chunksize=1000000):
         print(type(chunk))
         chunk.drop(["session_id", "user_id"], axis=1, inplace=True)
