@@ -61,3 +61,25 @@ predykcji oraz menedżera zajmującego się przeprowadzaniem eksperymentów.
 do serwowania predykcji.
 
 ## Model danych
+
+### Tabela "Artists"
+
+Opis tabeli "Artists":
+- **id (String)**: Identyfikator artysty (klucz główny).
+- **train_begin (Integer)**: Początek okresu treningowego.
+- **train_end (Integer)**: Koniec okresu treningowego.
+- **naive_model (LargeBinary)**: Binarny plik modelu dla podejścia naiwnego.
+- **complex_model (LargeBinary)**: Binarny plik modelu dla podejścia zaawansowanego.
+
+### Tabela "Results"
+
+Opis tabeli "Results":
+- **id (Integer)**: Identyfikator wyniku (klucz główny).
+- **artist_id (String)**: Identyfikator artysty związany z wynikiem.
+- **model (Integer)**: Identyfikator modelu.
+- **start (Integer)**: Początek okresu predykcji.
+- **periods (Integer)**: Liczba okresów predykcji.
+- **prediction (LargeBinary)**: Binarny plik z wynikami predykcji.
+- **duration (Float)**: Czas trwania predykcji.
+- **timestamp (DateTime)**: Data i czas utworzenia wyniku.
+- **is_experiment (Boolean)**: Informacja, czy wynik pochodzi z eksperymentu A/B (True/False).
