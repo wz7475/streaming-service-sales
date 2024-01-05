@@ -99,8 +99,8 @@ Opis tabeli "Results":
 ## Statystyki
 
 ### Czas generowania predykcji
-- **Model naiwny**: mean: 270 μs, stdev: 4.59 μs
-- **Model złożony**: mean: 2325 μs, stdev: 287 μs
+- **Model naiwny**: mean: 270 mikrosekund, stdev: 4.59 mikrosekund
+- **Model złożony**: mean: 2325 mikrosekund, stdev: 287 mikrosekund
 
 ### Wielkość bazy danych modeli
 Baza danych modeli zawiera zarówno modele naiwne jak i złożone
