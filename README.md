@@ -14,6 +14,7 @@ Our service earns when people listen to music. If we don't know how much time th
 * Pandas
 * statsmodels
 * autoArima
+* FastAPI
 
 
 
